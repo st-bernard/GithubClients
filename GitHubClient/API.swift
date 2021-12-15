@@ -27,22 +27,16 @@ final class API {
         request.timeoutInterval = 10
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                DispatchQueue.main.async {
-                    handler(.failure(error))
-                }
+                handler(.failure(error))
                 return
             }
             guard let data = data else {
-                DispatchQueue.main.async {
-                    handler(.failure(APIError.unknown))
-                }
+                handler(.failure(APIError.unknown))
                 return
             }
             guard let jsonOptional = try? JSONSerialization.jsonObject(with: data, options: []),
                   let jsons = jsonOptional as? [[String: Any]] else {
-                      DispatchQueue.main.async {
-                          handler(.failure(APIError.invalidResponse))
-                      }
+                      handler(.failure(APIError.invalidResponse))
                       return
               }
             var users = [User]()

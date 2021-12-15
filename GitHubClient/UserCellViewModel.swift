@@ -57,25 +57,19 @@ final class UserCellViewModel {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             //エラーがあった場合
             if error != nil {
-                DispatchQueue.main.async {
-                    progress(.error)
-                    self.isLoading = false
-                }
+                progress(.error)
+                self.isLoading = false
                 return
             }
             
             guard let data = data else {
-                DispatchQueue.main.async {
-                    progress(.error)
-                    self.isLoading = false
-                }
+                progress(.error)
+                self.isLoading = false
                 return
             }
             guard let imageFromData = UIImage(data: data) else {
-                DispatchQueue.main.async {
-                    progress(.error)
-                    self.isLoading = false
-                }
+                progress(.error)
+                self.isLoading = false
                 return
             }
             DispatchQueue.main.async {
