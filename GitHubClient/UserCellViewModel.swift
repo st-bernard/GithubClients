@@ -24,7 +24,6 @@ extension UIImage {
 final class UserCellViewModel {
     private var user: User
     private var isLoading = false
-    var catchImage: UIImage?
     
     var nickName: String {
         return user.name
@@ -46,11 +45,6 @@ final class UserCellViewModel {
         
         let loadingImage = UIImage.colorImage(color: .gray, size: CGSize(width: 45, height: 45))
         progress(.loading(loadingImage))
-        
-        if let catchImage = self.catchImage {
-            progress(.finish(catchImage))
-            self.isLoading = false
-        }
         
         var request = URLRequest(url: URL(string: user.iconUrl)!)
         request.httpMethod = "GET"
@@ -76,7 +70,6 @@ final class UserCellViewModel {
                 progress(.finish(imageFromData))
                 self.isLoading = false
             }
-            self.catchImage = imageFromData
         }
         task.resume()
     }
