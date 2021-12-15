@@ -24,6 +24,7 @@ final class UserListViewModel {
                 }
             case .failure(let error):
                 self.stateDidUpdate?(.error(error))
+                print(error)
             }
         }
     }

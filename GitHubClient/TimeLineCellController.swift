@@ -1,12 +1,10 @@
 import Foundation
 import UIKit
-import SafariServices
 
 final class TimeLineViewController: UIViewController {
     
     private var viewModel: UserListViewModel!
     private var tableView: UITableView!
-    private var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,25 +15,17 @@ final class TimeLineViewController: UIViewController {
         tableView.register(TimeLineCell.self, forCellReuseIdentifier: TimeLineCell.id)
         self.view.addSubview(tableView)
         
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(
-            self,
-            action: #selector(refreshControlValueDidChange(sender: )),
-            for: .valueChanged
-        )
-        tableView.refreshControl = refreshControl
-        
         viewModel = UserListViewModel()
         viewModel.stateDidUpdate = { [weak self] state in
             switch state {
             case .loading:
                 self?.tableView.isUserInteractionEnabled = false
+                print("loading........")
             case .finish:
                 self?.tableView.isUserInteractionEnabled = true
                 self?.tableView.reloadData()
             case .error(let error):
                 self?.tableView.isUserInteractionEnabled = true
-                self?.refreshControl.endRefreshing()
                 let alert = UIAlertController(
                     title: error.localizedDescription,
                     message: nil,
@@ -57,24 +47,16 @@ extension TimeLineViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let cellViewModel = viewModel.cellViewModels[indexPath.row]
-        let webUrl = cellViewModel.webUrl
-        let webViewController = SFSafariViewController(url: webUrl)
-        present(webViewController, animated: true)
-    }
 }
 
 extension TimeLineViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.usersCount()
+        return self.viewModel.usersCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let timeLineCell = tableView.dequeueReusableCell(withIdentifier: TimeLineCell.id) as? TimeLineCell {
-            let cellViewModel = viewModel.cellViewModels[indexPath.row]
+            let cellViewModel = self.viewModel.cellViewModels[indexPath.row]
             timeLineCell.setNickName(nickName: cellViewModel.nickName)
             cellViewModel.downloadImage() { progress in
                 switch progress {
