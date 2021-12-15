@@ -19,15 +19,9 @@ final class TimeLineViewController: UITableViewController {
             case .finish:
                 self?.tableView.isUserInteractionEnabled = true
                 self?.tableView.reloadData()
-            case .error(let error):
+            case .error:
                 self?.tableView.isUserInteractionEnabled = true
-                let alert = UIAlertController(
-                    title: error.localizedDescription,
-                    message: nil,
-                    preferredStyle: .alert
-                )
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                self?.present(alert, animated: true, completion: nil)
+                print("error!!!!!!!!!!")
             }
         }
         viewModel.getUsers()
@@ -46,21 +40,19 @@ extension TimeLineViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let timeLineCell = tableView.dequeueReusableCell(withIdentifier: TimeLineCell.id) as? TimeLineCell {
-            let cellViewModel = self.viewModel.cellViewModels[indexPath.row]
-            timeLineCell.setNickName(nickName: cellViewModel.nickName)
-            cellViewModel.downloadImage() { progress in
-                switch progress {
-                case .loading(let image):
-                    timeLineCell.setIcon(icon: image)
-                case .finish(let image):
-                    timeLineCell.setIcon(icon: image)
-                case .error:
-                    break
-                }
+        guard let timeLineCell = tableView.dequeueReusableCell(withIdentifier: TimeLineCell.id) as? TimeLineCell else { fatalError() }
+        let cellViewModel = self.viewModel.cellViewModels[indexPath.row]
+        timeLineCell.setNickName(nickName: cellViewModel.nickName)
+        cellViewModel.downloadImage() { progress in
+            switch progress {
+            case .loading(let image):
+                timeLineCell.setIcon(icon: image)
+            case .finish(let image):
+                timeLineCell.setIcon(icon: image)
+            case .error:
+                break
             }
-            return timeLineCell
         }
-        fatalError()
+        return timeLineCell
     }
 }
