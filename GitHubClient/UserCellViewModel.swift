@@ -23,8 +23,9 @@ extension UIImage {
 
 final class UserCellViewModel {
     private var user: User
-    private var imageDownloader = ImageDownloader()
     private var isLoading = false
+    var catchImage: UIImage?
+    
     var nickName: String {
         return user.name
     }
@@ -42,51 +43,44 @@ final class UserCellViewModel {
         } else {
             isLoading.toggle()
         }
+        
         let loadingImage = UIImage.colorImage(color: .gray, size: CGSize(width: 45, height: 45))
         progress(.loading(loadingImage))
-        imageDownloader.downloadImage(imageURL: user.iconUrl) { result in
-            switch result {
-            case .success(let image):
-                progress(.finish(image))
-                self.isLoading = false
-            case .failure(_):
-                progress(.error)
-                self.isLoading = false
-            }
+        
+        if let catchImage = self.catchImage {
+            progress(.finish(catchImage))
+            self.isLoading = false
         }
-    }
-}
-
-final class ImageDownloader {
-    var catchImage: UIImage?
-    
-    func downloadImage(imageURL: String, handler: @escaping ResultHandler<UIImage>) {
-        if let catchImage = catchImage {
-            handler(.success(catchImage))
-        }
-        var request = URLRequest(url: URL(string: imageURL)!)
+        
+        var request = URLRequest(url: URL(string: user.iconUrl)!)
         request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
+            //エラーがあった場合
+            if error != nil {
                 DispatchQueue.main.async {
-                    handler(.failure(error))
+                    progress(.error)
+                    self.isLoading = false
                 }
                 return
             }
+            
             guard let data = data else {
                 DispatchQueue.main.async {
-                    handler(.failure(APIError.unknown))
+                    progress(.error)
+                    self.isLoading = false
                 }
                 return
             }
             guard let imageFromData = UIImage(data: data) else {
                 DispatchQueue.main.async {
-                    handler(.failure(APIError.unknown))
+                    progress(.error)
+                    self.isLoading = false
                 }
                 return
             }
             DispatchQueue.main.async {
-                handler(.success(imageFromData))
+                progress(.finish(imageFromData))
+                self.isLoading = false
             }
             self.catchImage = imageFromData
         }
