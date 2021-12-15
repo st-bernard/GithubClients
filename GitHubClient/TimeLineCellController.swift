@@ -15,13 +15,9 @@ final class TimeLineViewController: UITableViewController {
             switch state {
             case .loading:
                 self?.tableView.isUserInteractionEnabled = false
-                print("loading........")
             case .finish:
                 self?.tableView.isUserInteractionEnabled = true
                 self?.tableView.reloadData()
-            case .error:
-                self?.tableView.isUserInteractionEnabled = true
-                print("error!!!!!!!!!!")
             }
         }
         viewModel.getUsers()
@@ -36,7 +32,7 @@ extension TimeLineViewController {
 
 extension TimeLineViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.usersCount()
+        return self.viewModel.cellViewModels.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -49,8 +45,6 @@ extension TimeLineViewController {
                 timeLineCell.setIcon(icon: image)
             case .finish(let image):
                 timeLineCell.setIcon(icon: image)
-            case .error:
-                break
             }
         }
         return timeLineCell
