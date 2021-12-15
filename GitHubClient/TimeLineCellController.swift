@@ -3,14 +3,14 @@ import UIKit
 
 final class TimeLineViewController: UITableViewController {
     
-    private var viewModel: UserListViewModel!
+    private var viewModel: Model!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.register(TimeLineCell.self, forCellReuseIdentifier: TimeLineCell.id)
         
-        viewModel = UserListViewModel()
+        viewModel = Model()
         viewModel.stateDidUpdate = { [weak self] state in
             switch state {
             case .loading:
@@ -32,13 +32,13 @@ extension TimeLineViewController {
 
 extension TimeLineViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.cellViewModels.count
+        return self.viewModel.users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let timeLineCell = tableView.dequeueReusableCell(withIdentifier: TimeLineCell.id) as? TimeLineCell else { fatalError() }
-        let cellViewModel = self.viewModel.cellViewModels[indexPath.row]
-        timeLineCell.setNickName(nickName: cellViewModel.nickName)
+        let cellViewModel = self.viewModel.users[indexPath.row]
+        timeLineCell.setNickName(nickName: cellViewModel.name)
         cellViewModel.downloadImage() { progress in
             switch progress {
             case .loading(let image):

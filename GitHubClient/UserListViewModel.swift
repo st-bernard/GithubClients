@@ -8,9 +8,9 @@ enum ViewModelState {
 
 typealias ResultHandler<T> = (Result<T, Error>) -> Void
 
-final class UserListViewModel {
+final class Model {
     var stateDidUpdate: ((ViewModelState) -> Void)?
-    var cellViewModels = [UserCellViewModel]()
+    var users = [User]()
     
     func getUsers() {
         stateDidUpdate?(.loading)
@@ -26,12 +26,11 @@ final class UserListViewModel {
             guard let data = data else { return }
             guard let jsonOptional = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
             guard let jsons = jsonOptional as? [[String: Any]] else { return }
-            let users = jsons.map { User(attributes: $0) }
             
             DispatchQueue.main.async {
-                users.forEach { user in
-                    let cellViewModel = UserCellViewModel(user: user)
-                    self.cellViewModels.append(cellViewModel)
+                jsons.forEach { json in
+                    let cellViewModel = User(json["login"] as! String, json["avatar_url"] as! String)
+                    self.users.append(cellViewModel)
                     self.stateDidUpdate?(.finish)
                 }
             }

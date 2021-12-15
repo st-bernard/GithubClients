@@ -20,16 +20,14 @@ extension UIImage {
     }
 }
 
-final class UserCellViewModel {
-    private var user: User
+final class User {
+    var name:String
+    var iconUrl:String
     private var isLoading = false
     
-    var nickName: String {
-        return user.name
-    }
-    
-    init(user: User) {
-        self.user = user
+    init(_ name:String, _ iconUrl:String) {
+        self.name = name
+        self.iconUrl = iconUrl
     }
     
     func downloadImage(progress: @escaping (ImageDownloadProgress) -> Void) {
@@ -42,7 +40,7 @@ final class UserCellViewModel {
         let loadingImage = UIImage.colorImage(color: .gray, size: CGSize(width: 45, height: 45))
         progress(.loading(loadingImage))
         
-        var request = URLRequest(url: URL(string: user.iconUrl)!)
+        var request = URLRequest(url: URL(string: self.iconUrl)!)
         request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
