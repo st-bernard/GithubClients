@@ -16,9 +16,9 @@
 		05E6BA2E2768972E00561F32 /* GitHubClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA2D2768972E00561F32 /* GitHubClientTests.swift */; };
 		05E6BA382768972E00561F32 /* GitHubClientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA372768972E00561F32 /* GitHubClientUITests.swift */; };
 		05E6BA3A2768972E00561F32 /* GitHubClientUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA392768972E00561F32 /* GitHubClientUITestsLaunchTests.swift */; };
-		05E6BA4D276897CA00561F32 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA4C276897CA00561F32 /* UserListViewModel.swift */; };
-		05E6BA4F276897E400561F32 /* UserCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA4E276897E400561F32 /* UserCellViewModel.swift */; };
-		05E6BA51276897F500561F32 /* TimeLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA50276897F500561F32 /* TimeLineCell.swift */; };
+		05E6BA4D276897CA00561F32 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA4C276897CA00561F32 /* Model.swift */; };
+		05E6BA4F276897E400561F32 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA4E276897E400561F32 /* User.swift */; };
+		05E6BA51276897F500561F32 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA50276897F500561F32 /* Cell.swift */; };
 		05E6BA532768980C00561F32 /* TimeLineCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6BA522768980C00561F32 /* TimeLineCellController.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,9 +53,9 @@
 		05E6BA332768972E00561F32 /* GitHubClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E6BA372768972E00561F32 /* GitHubClientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubClientUITests.swift; sourceTree = "<group>"; };
 		05E6BA392768972E00561F32 /* GitHubClientUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubClientUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		05E6BA4C276897CA00561F32 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
-		05E6BA4E276897E400561F32 /* UserCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCellViewModel.swift; sourceTree = "<group>"; };
-		05E6BA50276897F500561F32 /* TimeLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineCell.swift; sourceTree = "<group>"; };
+		05E6BA4C276897CA00561F32 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		05E6BA4E276897E400561F32 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		05E6BA50276897F500561F32 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		05E6BA522768980C00561F32 /* TimeLineCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineCellController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,9 +114,9 @@
 				05E6BA1F2768972D00561F32 /* Assets.xcassets */,
 				05E6BA212768972D00561F32 /* LaunchScreen.storyboard */,
 				05E6BA242768972D00561F32 /* Info.plist */,
-				05E6BA4C276897CA00561F32 /* UserListViewModel.swift */,
-				05E6BA4E276897E400561F32 /* UserCellViewModel.swift */,
-				05E6BA50276897F500561F32 /* TimeLineCell.swift */,
+				05E6BA4C276897CA00561F32 /* Model.swift */,
+				05E6BA4E276897E400561F32 /* User.swift */,
+				05E6BA50276897F500561F32 /* Cell.swift */,
 				05E6BA522768980C00561F32 /* TimeLineCellController.swift */,
 			);
 			path = GitHubClient;
@@ -271,12 +271,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				05E6BA1B2768972C00561F32 /* ViewController.swift in Sources */,
-				05E6BA4D276897CA00561F32 /* UserListViewModel.swift in Sources */,
+				05E6BA4D276897CA00561F32 /* Model.swift in Sources */,
 				05E6BA172768972C00561F32 /* AppDelegate.swift in Sources */,
 				05E6BA532768980C00561F32 /* TimeLineCellController.swift in Sources */,
 				05E6BA192768972C00561F32 /* SceneDelegate.swift in Sources */,
-				05E6BA4F276897E400561F32 /* UserCellViewModel.swift in Sources */,
-				05E6BA51276897F500561F32 /* TimeLineCell.swift in Sources */,
+				05E6BA4F276897E400561F32 /* User.swift in Sources */,
+				05E6BA51276897F500561F32 /* Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

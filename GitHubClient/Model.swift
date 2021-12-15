@@ -6,14 +6,11 @@ enum ViewModelState {
     case finish
 }
 
-typealias ResultHandler<T> = (Result<T, Error>) -> Void
-
 final class Model {
-    var stateDidUpdate: ((ViewModelState) -> Void)?
     var users = [User]()
     
-    func getUsers() {
-        stateDidUpdate?(.loading)
+    init(progress: @escaping (ViewModelState) -> Void) {
+        progress(.loading)
         
         let requestUrl = URL(string: "https://api.github.com/users")
         guard let url = requestUrl else { return }
@@ -31,7 +28,7 @@ final class Model {
                 jsons.forEach { json in
                     let cellViewModel = User(json["login"] as! String, json["avatar_url"] as! String)
                     self.users.append(cellViewModel)
-                    self.stateDidUpdate?(.finish)
+                    progress(.finish)
                 }
             }
         }

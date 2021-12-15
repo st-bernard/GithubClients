@@ -9,18 +9,18 @@ final class TimeLineCell: UITableViewCell {
     static func nib() -> UINib {
         return UINib(nibName: TimeLineCell.toString, bundle: nil)
     }
-    private var iconView: UIImageView!
-    private var nickNameLabel: UILabel!
+    var icon: UIImageView!
+    var nameLabel: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        iconView = UIImageView()
-        iconView.clipsToBounds = true
-        contentView.addSubview(iconView)
-        nickNameLabel = UILabel()
-        nickNameLabel.font = .systemFont(ofSize: 15)
-        contentView.addSubview(nickNameLabel)
+        icon = UIImageView()
+        icon.clipsToBounds = true
+        contentView.addSubview(icon)
+        nameLabel = UILabel()
+        nameLabel.font = .systemFont(ofSize: 15)
+        contentView.addSubview(nameLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -30,27 +30,19 @@ final class TimeLineCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        iconView.frame = CGRect(
+        icon.frame = CGRect(
             x: 15,
             y: 15,
             width: 45,
             height: 45
         )
-        iconView.layer.cornerRadius = iconView.frame.size.width / 2
+        icon.layer.cornerRadius = icon.frame.size.width / 2
         
-        nickNameLabel.frame = CGRect(
-            x: iconView.frame.maxX + 15,
-            y: iconView.frame.origin.y,
-            width: contentView.frame.width - iconView.frame.maxX - 15 * 2,
+        nameLabel.frame = CGRect(
+            x: icon.frame.maxX + 15,
+            y: icon.frame.origin.y,
+            width: contentView.frame.width - icon.frame.maxX - 15 * 2,
             height: 15
         )
-    }
-    
-    func setNickName(nickName: String) {
-        nickNameLabel.text = nickName
-    }
-    
-    func setIcon(icon: UIImage) {
-        iconView.image = icon
     }
 }
