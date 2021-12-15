@@ -6,9 +6,7 @@ final class TimeLineCell: UITableViewCell {
             return String(describing: self)
         }
     static let id = TimeLineCell.toString
-    static func nib() -> UINib {
-        return UINib(nibName: TimeLineCell.toString, bundle: nil)
-    }
+
     var icon: UIImageView!
     var nameLabel: UILabel!
     
